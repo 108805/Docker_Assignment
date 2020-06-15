@@ -1,0 +1,363 @@
+Your company is ready to start using Docker on some of their servers. In order to get started, they want you to set up and configure Docker CE on a server that has already been set up. You will need to make sure that the server meets the following specifications:
+
+Docker CE is installed and running on the server.
+Use Docker CE version 5:18.09.5~3-0~ubuntu-bionic.
+Any non-root user has permission to run docker commands.
+The default logging driver is set to syslog.
+
+
+[NOTE: Write the series of commands to achieve above in this file below the question scenario with documentation]
+
+
+Good luck!
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Docker CE is installed and running on the server.
+
+--------------------------------------------------
+
+Use Docker CE version 5:18.09.5~3-0~ubuntu-bionic
+
+--------------------------------------------------
+
+
+
+Step1: Update the apt package index:
+
+	sudo apt-get update
+
+	Hit:1 https://download.docker.com/linux/ubuntu bionic InRelease
+
+	Hit:2 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu bionic InRelease
+
+	Get:3 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+
+	Get:4 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+
+	Get:5 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+
+	Fetched 252 kB in 1s (265 kB/s)
+
+	Reading package lists... Done
+
+
+step2:Download Dependencies
+
+	You’ll need to run these commands to allow your operating system to access the Docker repositories over HTTPS.
+
+	
+
+	:-sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+
+        
+
+Reading package lists... Done
+
+Building dependency tree
+
+Reading state information... Done
+
+ca-certificates is already the newest version (20180409).
+
+curl is already the newest version (7.58.0-2ubuntu3.8).
+
+software-properties-common is already the newest version (0.96.24.32.11).
+
+apt-transport-https is already the newest version (1.6.12).
+
+gnupg-agent is already the newest version (2.2.4-1ubuntu1.2).
+
+0 upgraded, 0 newly installed, 0 to remove and 49 not upgraded.
+
+
+step3: Add Docker’s GPG Key
+
+  	:-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add –
+
+OK
+
+
+
+Step4:Install the Docker Repository
+
+	:-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable" 
+
+
+Hit:1 https://download.docker.com/linux/ubuntu bionic InRelease
+
+Hit:2 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu bionic InRelease
+
+Hit:3 http://security.ubuntu.com/ubuntu bionic-security InRelease
+
+Get:4 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+
+Get:5 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+
+Fetched 163 kB in 1s (187 kB/s)
+
+Reading package lists... Done
+
+
+Step5 install version:
+
+
+
+    :-sudo apt-get install docker-ce=<VERSION>
+
+	Example:sudo apt-get install docker-ce=5:18.09.5~3-0~ubuntu-bionic containerd.io
+
+
+Reading package lists... Done
+
+Building dependency tree
+
+Reading state information... Done
+
+containerd.io is already the newest version (1.2.10-3).
+
+docker-ce-cli is already the newest version (5:18.09.5~3-0~ubuntu-bionic).
+
+docker-ce is already the newest version (5:18.09.5~3-0~ubuntu-bionic).
+
+0 upgraded, 0 newly installed, 0 to remove and 47 not upgraded.
+
+
+
+Any non-root user has permission to run docker commands:
+
+--------------------------------------------------------------
+
+
+Step1:Add the ec2-user to the docker group so you can execute Docker commands without using sudo:
+
+
+
+sudo adduser cloud_user(give user name)
+
+example:
+
+sudo adduser poojass
+
+Adding user `poojass' ...
+
+Adding new group `poojass' (1004) ...
+
+
+Enter new UNIX password:
+
+Retype new UNIX password:
+
+passwd: password updated successfully
+
+Changing the user information for poojass
+
+Enter the new value, or press ENTER for the default
+
+        Full Name []: Pooja Srinivas
+
+        Room Number []:
+
+        Work Phone []:
+
+        Home Phone []:
+
+        Other []:
+
+Is the information correct? [Y/n]
+
+
+
+Adding newly created user to the group:
+
+sudo usermod -a -G docker poojass
+
+
+
+to take root user type: sudo su
+
+
+
+root@ip-172-31-2-234:/home/ubuntu# login
+
+ip-172-31-2-234 login: poojass
+
+Password:
+
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-1051-aws x86_64)
+
+
+
+ * Documentation:  https://help.ubuntu.com
+
+ * Management:     https://landscape.canonical.com
+
+ * Support:        https://ubuntu.com/advantage
+
+
+
+	sudo usermod -a -G docker cloud-user
+
+
+
+ logout
+
+root@ip-172-31-2-234:/home/ubuntu# login
+
+ip-172-31-2-234 login: poojass
+
+Password:
+
+
+
+poojass@ip-172-31-2-234:~$ docker run hello-world
+
+poojass@ip-172-31-2-234:~$ docker run hello-world
+
+
+
+Hello from Docker!
+
+This message shows that your installation appears to be working correctly.
+
+
+
+To generate this message, Docker took the following steps:
+
+ 1. The Docker client contacted the Docker daemon.
+
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+
+    (amd64)
+
+ 3. The Docker daemon created a new container from that image which runs the
+
+    executable that produces the output you are currently reading.
+
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+
+    to your terminal.
+
+
+
+To try something more ambitious, you can run an Ubuntu container with:
+
+ $ docker run -it ubuntu bash
+
+
+
+Share images, automate workflows, and more with a free Docker ID:
+
+ https://hub.docker.com/
+
+
+
+For more examples and ideas, visit:
+
+ https://docs.docker.com/get-started/
+
+
+
+
+
+if in case Any non-root user has permission to run docker commands, will get permission denied error:
+
+
+
+
+
+poojass@ip-172-31-2-234:~$ docker run hello-world
+
+docker: Got permission denied while trying to connect to the Docker daemon socket 
+
+at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.39/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
+
+
+
+
+
+The default logging driver is set to syslog:
+
+-------------------------------------------------
+
+
+
+Configure the default logging driver
+
+	To configure the Docker daemon to default to a specific logging driver,
+
+	set the value of log-driver to the name of the logging driver in the daemon.json file, 
+
+	which is located in /etc/docker/ on Linux hosts
+
+	
+
+	note : if file daemon.json is already exist no need to create 
+
+
+
+	{
+
+  	"log-driver": "syslog"
+
+	}
+
+
+
+cd /etc/docker
+
+root@ip-172-31-2-234:/etc/docker# ls
+
+key.json
+
+
+
+I dont have daemon.json file so ihave created daemon.json file and set the value for log-driver:
+
+
+
+root@ip-172-31-2-234:/etc/docker# vi daemon.json
+
+
+
+{
+
+  	"log-driver": "syslog"
+
+	}
+
+
+
+Restart the docker
+
+	 systemctl restart docker
+
+
+
+docker info:
+
+
+
+Containers: 2
+
+ Running: 0
+
+ Paused: 0
+
+ Stopped: 2
+
+Images: 1
+
+Server Version: 18.09.5
+
+Storage Driver: overlay2
+
+ Backing Filesystem: extfs
+
+ Supports d_type: true
+
+ Native Overlay Diff: true
+
+Logging Driver: syslog
+
+Cgroup Driver: cgroupfs
